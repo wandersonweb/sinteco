@@ -1,0 +1,454 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { CheckCircle2, ArrowRight, User, Calendar, Clock, ChevronRight, Share2, Award, ShieldCheck, MapPin, Droplets, Hammer, Sun, Sparkles, Ruler } from 'lucide-astro';
+
+export async function getStaticPaths() {
+	const services = [
+		{
+			slug: "sinteco-em-bh",
+			title: "Sinteco em BH",
+			headline: "Aplicação de Sinteco em Belo Horizonte (BH): Tudo o Que Você Precisará Saber",
+			description: "Melhor serviço de aplicação de sinteco em BH. Guia completo sobre preços, benefícios, restauração de tacos e parquets em Belo Horizonte.",
+			category: "Guia Completo",
+			author: "Wanderson Silva",
+			date: "13 de Maio, 2024",
+			readTime: "8 min de leitura",
+			image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200",
+			isRichContent: true
+		},
+		{
+			slug: "reforma-deck-madeira",
+			title: "Reforma de Deck",
+			headline: "Reforma de Deck de Madeira: Guia Completo para Restaurar e Manter o Seu Deck",
+			description: "Guia completo sobre reforma e restauração de decks em BH. Aprenda sobre materiais, manutenção de decks de pinus e madeira ecológica.",
+			category: "Áreas Externas",
+			author: "Wanderson Silva",
+			date: "14 de Maio, 2024",
+			readTime: "7 min de leitura",
+			image: "https://images.unsplash.com/photo-1525909002129-1835b111596e?auto=format&fit=crop&q=80&w=1200",
+			isRichContent: true
+		},
+		{
+			slug: "raspagem-de-piso-de-madeira",
+			title: "Raspagem de Piso",
+			headline: "Raspagem de Piso de Madeira: Tudo o Que Você Precisa Saber",
+			description: "Descubra o processo completo de raspagem de pisos de madeira. Benefícios, técnicas sem pó, calafetação e acabamentos para tacos e assoalhos.",
+			category: "Restauração",
+			author: "Wanderson Silva",
+			date: "15 de Maio, 2024",
+			readTime: "6 min de leitura",
+			image: "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&q=80&w=1200",
+			isRichContent: true
+		},
+		{
+			slug: "instalacao-de-piso-de-madeira",
+			title: "Instalação de Piso",
+			headline: "Instalação de Piso de Madeira: Tudo o que Você Precisa Saber",
+			description: "Guia completo sobre instalação de pisos de madeira. Conheça as técnicas de colagem, pregação e pisos flutuantes, além dos cuidados essenciais.",
+			category: "Instalação",
+			author: "Wanderson Silva",
+			date: "16 de Maio, 2024",
+			readTime: "7 min de leitura",
+			image: "https://images.unsplash.com/photo-1505691938895-1758d7eaa511?auto=format&fit=crop&q=80&w=1200",
+			isRichContent: true
+		},
+		{
+			slug: "aplicacao-de-bona",
+			title: "Aplicação de Bona",
+			headline: "Resina Bona em BH: Vale a pena o investimento?",
+			description: "Análise completa sobre a aplicação de Bona em BH. Vantagens, tempo de secagem e por que é a preferida dos arquitetos.",
+			content: "A Bona revolucionou o mercado de tratamento de pisos de madeira. Sendo uma resina à base de água, ela oferece benefícios que o sinteco tradicional não consegue superar.",
+			category: "Resinas Modernas",
+			author: "Wanderson Silva",
+			date: "10 de Maio, 2024",
+			readTime: "7 min de leitura",
+			image: "https://images.unsplash.com/photo-1581850518616-bcb81881443e?auto=format&fit=crop&q=80&w=1200"
+		}
+	];
+
+	return services.map(service => ({
+		params: { service: service.slug },
+		props: { service }
+	}));
+}
+
+const { service } = Astro.props;
+
+// Buscar os posts do blog para a seção de similares
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+	.sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+
+const formatDate = (date: Date) => {
+	return new Intl.DateTimeFormat('pt-BR', {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric'
+	}).format(date);
+};
+---
+
+<Layout title={`${service.headline} | Sinteco BH`} description={service.description}>
+	<Navbar />
+	
+	<main class="bg-white">
+		<!-- Hero Section -->
+		<section class="pt-32 pb-12 md:pt-48 md:pb-20 bg-stone-50/80 border-b border-stone-100">
+			<div class="max-w-4xl mx-auto px-6">
+				<nav class="flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-primary mb-8 overflow-x-auto whitespace-nowrap scrollbar-hide">
+					<a href="/" class="hover:text-secondary transition-colors">Home</a>
+					<ChevronRight class="w-3 h-3 shrink-0" />
+					<a href="/blog" class="hover:text-secondary transition-colors">Blog</a>
+					<ChevronRight class="w-3 h-3 shrink-0" />
+					<span class="text-text-muted">{service.category}</span>
+				</nav>
+
+				<div class="space-y-6 md:space-y-8">
+					<h1 class="text-3xl md:text-5xl lg:text-7xl font-bold text-text-main leading-[1.1] tracking-tighter">
+						{service.headline}
+					</h1>
+					
+					<div class="flex flex-col sm:flex-row sm:items-center gap-6 py-8 border-y border-stone-200/60 mt-12">
+						<div class="flex items-center gap-4">
+							<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20 shadow-inner">
+								<User class="w-6 h-6" />
+							</div>
+							<div>
+								<p class="text-sm font-bold text-text-main leading-none">{service.author}</p>
+								<p class="text-[11px] text-text-muted uppercase tracking-wider mt-1.5 font-medium">Especialista Técnico</p>
+							</div>
+						</div>
+						
+						<div class="hidden sm:block w-px h-10 bg-stone-200"></div>
+
+						<div class="flex items-center gap-6 text-sm text-text-muted font-medium">
+							<span class="flex items-center gap-2">
+								<Calendar class="w-4 h-4 text-primary/60" />
+								{service.date}
+							</span>
+							<span class="flex items-center gap-2">
+								<Clock class="w-4 h-4 text-primary/60" />
+								{service.readTime}
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Hero Image -->
+		<section class="max-w-6xl mx-auto px-4 md:px-6 -mt-10 md:-mt-20">
+			<div class="aspect-[16/9] md:aspect-[21/9] rounded-2xl md:rounded-[3rem] overflow-hidden shadow-2xl border-4 md:border-8 border-white ring-1 ring-stone-200">
+				<img src={service.image} alt={service.title} class="w-full h-full object-cover" />
+			</div>
+		</section>
+
+		<!-- Main Content Area -->
+		<section class="py-16 md:py-24 px-6 max-w-7xl mx-auto border-b border-stone-100">
+			<div class="grid lg:grid-cols-12 gap-12 md:gap-20">
+				
+				<!-- Sidebar (Desktop Only) -->
+				<aside class="hidden lg:block lg:col-span-3 sticky top-32 h-fit space-y-8">
+					<div class="p-8 bg-stone-50 rounded-[2rem] border border-stone-100 shadow-sm">
+						<h3 class="text-sm font-bold uppercase tracking-widest text-text-main mb-8 flex items-center gap-2">
+							<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+							Capítulos do Guia
+						</h3>
+						<nav class="space-y-5">
+							{service.slug === 'sinteco-em-bh' && (
+								<>
+									<a href="#o-que-e" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">O Que é Sinteco?</a>
+									<a href="#beneficios" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Benefícios</a>
+									<a href="#custo" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Quanto Custa?</a>
+								</>
+							)}
+							{service.slug === 'reforma-deck-madeira' && (
+								<>
+									<a href="#por-que" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Por Que Reformar?</a>
+									<a href="#materiais" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Tipos e Materiais</a>
+									<a href="#processo" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Como é feito?</a>
+								</>
+							)}
+							{service.slug === 'raspagem-de-piso-de-madeira' && (
+								<>
+									<a href="#o-que-e" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">O que é Raspagem?</a>
+									<a href="#quando-fazer" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Quando fazer?</a>
+									<a href="#processo" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">O Processo</a>
+								</>
+							)}
+							{service.slug === 'instalacao-de-piso-de-madeira' && (
+								<>
+									<a href="#qualidade" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Qualidade Necessária</a>
+									<a href="#como-e-feita" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Como a Instalação é Feita</a>
+									<a href="#passo-a-passo" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Passo a Passo</a>
+									<a href="#cuidados" class="block text-sm font-bold text-text-muted hover:text-primary transition-all border-l-2 border-transparent hover:border-primary pl-4 -ml-4">Cuidados Cruciais</a>
+								</>
+							)}
+						</nav>
+					</div>
+
+					<div class="p-8 bg-primary text-white rounded-[2rem] shadow-xl shadow-primary/20 relative overflow-hidden group">
+						<div class="relative z-10">
+							<h3 class="text-xl font-bold mb-3 leading-tight">Quer um piso impecável?</h3>
+							<p class="text-white/80 text-xs mb-6 leading-relaxed">Fale com quem entende de pisos em BH.</p>
+							<a href="https://wa.me/5531999999999" class="w-full py-4 bg-white text-primary rounded-xl font-bold text-sm flex items-center justify-center gap-2 group-hover:scale-[1.02] transition-transform">
+								WhatsApp Grátis
+								<ArrowRight class="w-4 h-4" />
+							</a>
+						</div>
+						<div class="absolute -right-8 -bottom-8 opacity-10">
+							<Sparkles class="w-32 h-32 text-white" />
+						</div>
+					</div>
+				</aside>
+
+				<!-- Article Content -->
+				<div class="lg:col-span-9 max-w-3xl mx-auto lg:mx-0">
+					<div class="prose-editorial">
+						
+						{service.slug === 'sinteco-em-bh' && (
+							<>
+								<p id="introducao" class="text-xl md:text-3xl leading-relaxed md:leading-snug text-text-main font-medium mb-12 tracking-tight">
+									A aplicação de sinteco é um dos métodos mais populares e eficazes para revitalizar pisos de madeira, devolvendo beleza e durabilidade ao espaço. No entanto, para garantir um resultado impecável, é importante contar com especialistas que conhecem os melhores produtos e técnicas. 
+								</p>
+								<p class="mb-12">
+									Se você está em <strong>Belo Horizonte (BH)</strong> e busca soluções para renovar seu piso, este guia é para você. Vamos explorar o processo de aplicação, os benefícios, os serviços oferecidos, e responder dúvidas frequentes sobre o assunto.
+								</p>
+								<h2 id="o-que-e">O Que é a Aplicação de Sinteco?</h2>
+								<p>
+									Sinteco é um tipo de acabamento usado em pisos de madeira, feito à base de resinas sintéticas. Ele cria uma camada protetora que preserva a beleza natural do piso, aumentando sua resistência ao desgaste e realçando o brilho. O processo inclui a <strong>raspagem do piso</strong> para remover antigos acabamentos e imperfeições.
+								</p>
+								<h2 id="beneficios">Benefícios da Aplicação de Sinteco</h2>
+								<p>Dentre as principais vantagens estão a aparência renovada (devolve o brilho natural), a durabilidade (proteção contra riscos e manchas) e o excelente custo-benefício para quem deseja valorizar o imóvel.</p>
+								<h2 id="custo">Quanto Custa Aplicar Sinteco em BH?</h2>
+								<p>O preço varia conforme o estado do piso e o produto escolhido. Recomendamos consultar nossa tabela atualizada em <a href="/blog/preco-sinteco" class="text-primary font-bold">preços de sinteco em BH</a>.</p>
+							</>
+						)}
+
+						{service.slug === 'reforma-deck-madeira' && (
+							<>
+								<p id="introducao" class="text-xl md:text-3xl leading-relaxed md:leading-snug text-text-main font-medium mb-12 tracking-tight">
+									Manter um deck de madeira bem conservado não é apenas uma questão de estética, mas também de funcionalidade e longevidade.
+								</p>
+								<p class="mb-12">Seja para relaxar em família ou receber amigos, o deck é um elemento essencial que merece cuidados contínuos. Se você está pensando em reformar ou restaurar o seu deck, este guia completo traz todas as informações necessárias.</p>
+								
+								<h2 id="por-que">1. Por Que Fazer a Reforma de um Deck de Madeira?</h2>
+								<p>O tempo e as condições climáticas podem deixar sinais no seu deck. Rachaduras, descoloração e desgaste estrutural são comuns, mas a reforma pode dar vida nova ao espaço, garantindo estética renovada, segurança e economia (reformar é mais barato que substituir).</p>
+								
+								<h2 id="materiais">2. Tipos de Deck e Materiais Utilizados</h2>
+								<p><strong>Deck de Madeira Ecológica:</strong> Ideal para quem busca unir sofisticação e respeito ao meio ambiente. É mais resistente à umidade e ao ataque de pragas.</p>
+								<p><strong>Deck de Pinus Tratado:</strong> Opção popular que ganha resistência contra insetos e intempéries após processos de preservação, oferecendo ótimo custo-benefício.</p>
+								
+								<h2 id="processo">3. Como é Feita a Reforma e Restauração?</h2>
+								<p>A restauração envolve lixamento para remoção de imperfeições, aplicação de produtos específicos para proteção UV e umidade, e substituição de peças comprometidas. Em Belo Horizonte, profissionais especializados conhecem bem o clima local para recomendar o melhor tratamento.</p>
+							</>
+						)}
+
+						{service.slug === 'raspagem-de-piso-de-madeira' && (
+							<>
+								<p id="introducao" class="text-xl md:text-3xl leading-relaxed md:leading-snug text-text-main font-medium mb-12 tracking-tight">
+									A raspagem de piso de madeira é uma etapa essencial na manutenção, garantindo sua longevidade e aparência impecável. 
+								</p>
+								<p class="mb-12">
+									Este artigo reúne tudo o que você precisa saber sobre o processo, desde os benefícios até custo e acabamento. Confira também nosso artigo completo sobre <a href="/blog/restauracao-de-piso-de-madeira" class="text-primary font-bold">restauração de pisos em BH</a> e o guia de <a href="/blog/preco-sinteco" class="text-primary font-bold">preços de sinteco</a>.
+								</p>
+
+								<h2 id="o-que-e">1. O Que é a Raspagem de Piso de Madeira?</h2>
+								<p>É a técnica usada para remover imperfeições como riscos, manchas e desgaste. Esse processo devolve à madeira sua aparência original, permitindo novas camadas de proteção.</p>
+								<h3 id="beneficios">Benefícios da Raspagem</h3>
+								<p>Além da estética renovada, a raspagem melhora a higiene (superfícies lisas acumulam menos poeira) e aumenta a durabilidade do patrimônio. Pisos de madeira são sustentáveis e podem durar décadas se bem cuidados.</p>
+
+								<h2 id="quando-fazer">2. Quando a Raspagem Deve Ser Feita?</h2>
+								<p>Sinais claros incluem riscos profundos, verniz descascando ou sem brilho, e desníveis no piso. Geralmente a raspagem é recomendada a cada 10-15 anos.</p>
+
+								<h2 id="processo">3. Processo de Raspagem e Lixamento</h2>
+								<p>O processo inclui: preparação do espaço, lixamento grosso (para remover o verniz antigo), lixamento fino (para alisar), calafetação (para fechar fendas) e o acabamento final com resinas como Sinteco ou Bona.</p>
+								<h3 id="sem-po">Raspagem Sem Pó</h3>
+								<p>Atualmente usamos máquinas modernas que aspiram a poeira durante o lixamento, garantindo um ambiente limpo durante toda a obra em BH.</p>
+							</>
+						)}
+
+						{service.slug === 'instalacao-de-piso-de-madeira' && (
+							<>
+								<p id="introducao" class="text-xl md:text-3xl leading-relaxed md:leading-snug text-text-main font-medium mb-12 tracking-tight">
+									A instalação de piso de madeira é um dos passos mais importantes para garantir beleza, durabilidade e conforto em ambientes residenciais e comerciais.
+								</p>
+								
+								<p class="mb-12">
+									No entanto, esse processo vai muito além de simplesmente colar ou pregar as peças no chão. Exige qualidade nos materiais, técnica e atenção em cada etapa. Vamos explorar mais sobre esse tema, detalhando como a instalação funciona, os cuidados necessários e por que escolher uma empresa especializada faz toda a diferença.
+								</p>
+
+								<h2 id="qualidade">Qualidade Necessária para Instalar um Piso de Madeira</h2>
+								<p>
+									Para que o piso de madeira alcance sua máxima beleza e funcionalidade, a qualidade deve ser prioridade desde o início. Isso não se resume apenas ao tipo de madeira usada, mas também aos tratamentos e técnicas empregadas na instalação. Madeira bem tratada, livre de imperfeições e adaptada ao ambiente é essencial para evitar problemas como empenamento, rachaduras ou desgastes precoces. Além disso, contar com profissionais capacitados garante que cada detalhe seja executado com eficácia.
+								</p>
+
+								<h2 id="como-e-feita">Como a Instalação é Feita</h2>
+								<p>
+									A instalação de piso de madeira segue um processo minucioso que envolve várias etapas. O primeiro passo é a preparação do ambiente, que inclui nivelar o piso base, ajustar as condições de umidade e garantir um espaço limpo para a aplicação. Após isso, as peças de madeira são ajustadas ao local para evitar cortes desnecessários, respeitando o fluxo natural do ambiente.
+								</p>
+								<p>
+									Os pisos podem ser aplicados de diferentes formas, dependendo do método escolhido, como colagem, pregação ou instalação “flutuante”, em que a madeira não é fixada diretamente ao contrapiso. A escolha da técnica dependerá do tipo de madeira e do projeto arquitetônico. Todo o processo requer atenção ao alinhamento das peças para que o resultado final seja estético e funcional.
+								</p>
+
+								<h2 id="passo-a-passo">Passo a Passo da Instalação</h2>
+								<ul class="space-y-4 mb-8">
+									<li><strong>1. Preparação do Substrato:</strong> Certifique-se de que o piso onde será feita a instalação está nivelado, seco e limpo.</li>
+									<li><strong>2. Acostumar a Madeira ao Ambiente:</strong> É fundamental deixar a madeira “descansar” no local por alguns dias para evitar retrações ou expansões indesejadas.</li>
+									<li><strong>3. Planejamento e Corte das Peças:</strong> Antes da instalação, as peças de madeira são ajustadas para encaixarem perfeitamente, minimizando desperdícios e garantindo um alinhamento preciso.</li>
+									<li><strong>4. Fixação das Tábuas:</strong> Dependendo do método escolhido, as tábuas podem ser pregadas, coladas ou colocadas sobre uma base especial no caso de pisos flutuantes.</li>
+									<li><strong>5. Acabamento Final:</strong> Após a aplicação, é importante realizar o lixamento e o acabamento, que pode incluir a aplicação de verniz, cera ou selador. Esse passo não só eleva a estética como também protege a madeira de desgastes.</li>
+								</ul>
+
+								<h2 id="cuidados">Cuidados Durante a Aplicação</h2>
+								<p>
+									A instalação de piso de madeira não é apenas um trabalho técnico, mas também uma tarefa que demanda atenção aos detalhes. Algumas medidas são cruciais para um resultado satisfatório:
+								</p>
+								<p>
+									<strong>Controle de Umidade:</strong> A madeira é um material natural que pode expandir ou contrair dependendo da umidade do ambiente. Por isso, é essencial monitorar esses níveis antes e durante a instalação.
+								</p>
+								<p>
+									<strong>Alinhamento das Peças:</strong> Tome cuidado com o alinhamento das tábuas durante o processo. Um pequeno desalinhamento pode comprometer o visual uniforme do piso.
+								</p>
+								<p>
+									<strong>Uso de Equipamentos Adequados:</strong> Ferramentas específicas e de boa qualidade ajudam a evitar danos que podem surgir durante cortes e ajustes. Outro ponto vital é a paciência. Apressar o processo pode comprometer a qualidade final.
+								</p>
+
+								<h2 id="especializada">A Importância de uma Empresa Especializada</h2>
+								<p>
+									Embora algumas pessoas tentem realizar a instalação de um piso de madeira por conta própria, contar com uma empresa especializada garante eficiência, segurança e resultados superiores.
+								</p>
+								<p>
+									Uma empresa experiente no mercado oferece um serviço alinhado às expectativas do cliente e segue os mais altos padrões de qualidade. Seus profissionais analisam cuidadosamente o projeto, apresentam soluções personalizadas e executam o trabalho com precisão, deixando o piso impecável. Contratar especialistas é a melhor forma de evitar dores de cabeça futuras e assegurar um acabamento perfeito que valorize o espaço.
+								</p>
+
+								<h2 id="saiba-mais">Saiba Mais Sobre Instalação de Pisos de Madeira</h2>
+								<p>
+									Se você está planejando transformar seu ambiente com o charme dos pisos de madeira, é essencial se informar antes de começar. Conhecer cada etapa do processo, saber quais cuidados são necessários e contar com profissionais qualificados fazem toda a diferença para o sucesso do projeto.
+								</p>
+								<p>
+									Entre em contato conosco para tirar suas dúvidas e conhecer as melhores opções para o seu espaço. Aproveite essa oportunidade de investir em um material nobre e usufruir de todas as vantagens que um piso de madeira pode oferecer! Confira também nosso post relacionado: <a href="/blog/restauracao-de-piso-de-madeira" class="text-primary font-bold">Restauração de piso de Madeira</a>.
+								</p>
+							</>
+						)}
+
+						{/* CTA Block comum */}
+						<div class="my-20 p-10 md:p-16 bg-stone-900 rounded-[3rem] text-white relative overflow-hidden group border border-white/10 shadow-2xl">
+							<div class="relative z-10 space-y-8 max-w-xl text-center mx-auto">
+								<h2 class="text-3xl md:text-5xl font-bold text-white leading-tight tracking-tighter mt-0!">Pronto para renovar seu piso?</h2>
+								<p class="text-white/60 text-lg">Orçamentos rápidos e transparentes via WhatsApp. Atendemos toda BH e Região Metropolitana.</p>
+								<div class="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+									<a href="https://wa.me/5531999999999" class="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-lg shadow-xl shadow-primary/30 hover:bg-secondary transition-all">
+										Conversar no WhatsApp
+									</a>
+								</div>
+							</div>
+							<div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Similar Posts Section -->
+		<section class="py-20 bg-white overflow-hidden">
+			<div class="max-w-7xl mx-auto px-6">
+				<div class="flex items-center justify-between mb-12">
+					<h2 class="text-3xl md:text-4xl font-bold text-text-main tracking-tight">Posts Similares</h2>
+				</div>
+
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+					{relatedPosts.map((p: CollectionEntry<'blog'>) => (
+						<article class="flex flex-col group cursor-pointer">
+							<a href={`/blog/${p.id}`} class="block aspect-[4/3] rounded-2xl overflow-hidden mb-6 shadow-sm group-hover:shadow-xl transition-all duration-500">
+								<img 
+									src={p.data.heroImage} 
+									alt={p.data.title}
+									class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+								/>
+							</a>
+							<div class="space-y-3">
+								<a href={`/blog/${p.id}`} class="block">
+									<h3 class="text-xl md:text-2xl font-bold text-text-main leading-tight hover:text-primary transition-colors line-clamp-2">
+										{p.data.title}
+									</h3>
+								</a>
+								<div class="flex items-center gap-2 text-sm text-text-muted font-medium">
+									<span>Por {p.data.author || 'admin'}</span>
+									<span class="text-stone-300">•</span>
+									<span>{formatDate(p.data.pubDate)}</span>
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer Author & Share -->
+		<section class="max-w-4xl mx-auto px-6 pb-32">
+			<div class="pt-16 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-12">
+				<div class="flex items-center gap-6">
+					<span class="text-xs font-bold text-text-main uppercase tracking-[0.2em]">Compartilhe</span>
+					<button class="w-12 h-12 rounded-full border border-stone-200 flex items-center justify-center text-text-muted hover:bg-primary hover:text-white transition-all">
+						<Share2 class="w-5 h-5" />
+					</button>
+				</div>
+				
+				<div class="flex items-center gap-6 p-8 bg-stone-50 rounded-[2.5rem] border border-stone-100 max-w-lg shadow-sm">
+					<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 shadow-inner">
+						<User class="w-8 h-8" />
+					</div>
+					<div>
+						<p class="text-base font-bold text-text-main mb-1">Escrito por {service.author}</p>
+						<p class="text-xs md:text-sm text-text-muted leading-relaxed font-medium">Especialista técnico em recuperação de superfícies amadeiradas com foco em durabilidade e estética premium em Belo Horizonte.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<Footer />
+	<WhatsAppButton />
+</Layout>
+
+<style>
+	@reference "tailwindcss";
+
+	/* Editorial Typography System */
+	.prose-editorial h2 {
+		@apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tighter mb-10 mt-20 text-stone-900 leading-[1.1];
+	}
+	.prose-editorial h3 {
+		@apply text-2xl md:text-3xl font-bold tracking-tight mb-6 mt-12 text-stone-800;
+	}
+	.prose-editorial p {
+		@apply mb-8 leading-[1.8] text-base md:text-lg text-stone-600 font-medium;
+	}
+	.prose-editorial h4 {
+		@apply text-xl font-bold text-stone-900 mb-2 mt-0!;
+	}
+	.prose-editorial strong {
+		@apply text-stone-900 font-bold;
+	}
+	.prose-editorial ul {
+		@apply space-y-4 mb-12 list-disc pl-6 text-stone-600;
+	}
+	.prose-editorial li {
+		@apply text-base md:text-lg leading-relaxed;
+	}
+
+	/* Scrollbar Hide */
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
+	.scrollbar-hide {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+</style>

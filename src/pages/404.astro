@@ -1,0 +1,193 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Home, Search, ArrowRight, BookOpen, Sparkles, Hammer, Droplets, Layers } from 'lucide-astro';
+
+// Buscar posts recentes para sugestões
+const allPosts = await getCollection('blog');
+const recentPosts = allPosts
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const popularServices = [
+  {
+    title: "Sinteco em BH",
+    description: "Aplicação profissional com brilho, fosco ou acetinado.",
+    href: "/sinteco-em-bh",
+    icon: Sparkles,
+  },
+  {
+    title: "Raspagem de Piso",
+    description: "Raspagem sem poeira com equipamentos modernos.",
+    href: "/raspagem-de-piso-de-madeira",
+    icon: Hammer,
+  },
+  {
+    title: "Aplicação de Bona",
+    description: "Resinas de alta performance à base de água.",
+    href: "/aplicacao-de-bona",
+    icon: Droplets,
+  },
+  {
+    title: "Reforma de Deck",
+    description: "Restauração completa para áreas externas.",
+    href: "/reforma-deck-madeira",
+    icon: Layers,
+  },
+];
+---
+
+<Layout 
+  title="Página Não Encontrada (404)" 
+  description="A página que você procura não foi encontrada. Confira nossos serviços de sinteco, raspagem e restauração de pisos de madeira em BH."
+>
+  <Navbar />
+  
+  <main class="bg-background min-h-screen">
+    <!-- Hero 404 -->
+    <section class="pt-36 pb-16 md:pt-48 md:pb-24 relative overflow-hidden">
+      <!-- Decorative elements -->
+      <div class="absolute inset-0 -z-10">
+        <div class="absolute top-20 left-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="max-w-4xl mx-auto px-6 text-center">
+        <!-- 404 Number -->
+        <div class="relative inline-block mb-8">
+          <span class="text-[10rem] md:text-[14rem] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-primary/20 to-primary/5 select-none" aria-hidden="true">
+            404
+          </span>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-20 h-20 md:w-28 md:h-28 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shadow-inner backdrop-blur-sm">
+              <Search class="w-10 h-10 md:w-14 md:h-14 text-primary/60" />
+            </div>
+          </div>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-bold text-text-main mb-6 tracking-tight leading-tight">
+          Ops! Esta página não foi encontrada
+        </h1>
+        
+        <p class="text-lg md:text-xl text-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
+          A página que você está procurando pode ter sido movida, renomeada ou não existe mais. 
+          Mas não se preocupe — temos muito conteúdo útil para você!
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+          <a href="/" class="btn-primary gap-2 text-lg px-8 py-4">
+            <Home class="w-5 h-5" />
+            Voltar ao Início
+          </a>
+          <a href="/blog" class="btn-secondary text-lg px-8 py-4 gap-2">
+            <BookOpen class="w-5 h-5" />
+            Ver o Blog
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Serviços Populares -->
+    <section class="pb-20 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 space-y-3">
+          <p class="text-primary font-bold uppercase tracking-[0.2em] text-sm">Nossos Serviços</p>
+          <h2 class="text-2xl md:text-4xl font-bold text-text-main tracking-tight">
+            Talvez você esteja procurando por isso
+          </h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {popularServices.map(service => (
+            <a 
+              href={service.href} 
+              class="group p-6 bg-white rounded-2xl border border-stone-100 hover:border-primary/20 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+              <div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-5">
+                <service.icon class="w-6 h-6" />
+              </div>
+              <h3 class="text-lg font-bold text-text-main mb-2 group-hover:text-primary transition-colors">
+                {service.title}
+              </h3>
+              <p class="text-text-muted text-sm leading-relaxed mb-4">
+                {service.description}
+              </p>
+              <span class="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 group-hover:translate-x-1 transition-transform">
+                Ver Mais
+                <ArrowRight class="w-4 h-4" />
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Posts Recentes -->
+    <section class="pb-24 px-6">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-12 space-y-3">
+          <p class="text-primary font-bold uppercase tracking-[0.2em] text-sm">Blog</p>
+          <h2 class="text-2xl md:text-4xl font-bold text-text-main tracking-tight">
+            Artigos mais recentes
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          {recentPosts.map((post: CollectionEntry<'blog'>) => (
+            <a href={`/blog/${post.id}`} class="group card-premium flex flex-col">
+              <div class="aspect-video overflow-hidden">
+                <img 
+                  src={post.data.heroImage || 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800'} 
+                  alt={post.data.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-6 flex flex-col flex-1">
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest mb-3">{post.data.category}</span>
+                <h3 class="text-lg font-bold text-text-main mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-text-muted text-sm line-clamp-2 mb-4 flex-1">
+                  {post.data.description}
+                </p>
+                <span class="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+                  Ler Artigo
+                  <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="pb-24 px-6">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-primary rounded-[2.5rem] p-8 md:p-16 text-center text-white relative overflow-hidden">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent)]"></div>
+          <div class="relative z-10 space-y-6">
+            <h2 class="text-2xl md:text-4xl font-bold">Não encontrou o que procurava?</h2>
+            <p class="text-lg text-white/80 max-w-xl mx-auto">
+              Fale diretamente com nossa equipe. Atendemos em toda Belo Horizonte e Região Metropolitana.
+            </p>
+            <a 
+              href="https://wa.me/5531999999999" 
+              class="inline-flex items-center gap-2 bg-white text-primary hover:bg-stone-100 px-8 py-4 rounded-xl font-bold text-lg transition-colors"
+            >
+              Falar no WhatsApp
+              <ArrowRight class="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+  <WhatsAppButton />
+</Layout>

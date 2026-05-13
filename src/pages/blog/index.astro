@@ -1,0 +1,80 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import { Calendar, User, ArrowRight } from 'lucide-astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const formatDate = (date: Date) => {
+	return new Intl.DateTimeFormat('pt-BR', {
+		day: '2-digit',
+		month: 'long',
+		year: 'numeric'
+	}).format(date);
+};
+---
+
+<Layout 
+	title="Blog Sinteco BH | Dicas e Novidades sobre Pisos de Madeira" 
+	description="Acompanhe nosso blog e fique por dentro das melhores dicas de manutenção, escolha de resinas e tendências para pisos de madeira em Belo Horizonte."
+>
+	<Navbar />
+	<main class="pt-32 pb-20">
+		<div class="max-w-7xl mx-auto px-6">
+			<header class="max-w-3xl mb-16 space-y-6">
+				<h1 class="text-5xl font-bold text-text-main">Blog & Conhecimento</h1>
+				<p class="text-xl text-text-muted leading-relaxed">
+					Tudo o que você precisa saber sobre raspagem, sinteco, bona e cuidados com seu piso de madeira.
+				</p>
+			</header>
+
+			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+				{posts.map((post: CollectionEntry<'blog'>) => (
+					<article class="card-premium flex flex-col bg-white">
+						<a href={`/blog/${post.id}`} class="block overflow-hidden">
+							<img 
+								src={post.data.heroImage} 
+								alt={post.data.title}
+								class="w-full aspect-video object-cover hover:scale-105 transition-transform duration-500"
+							/>
+						</a>
+						<div class="p-8 flex flex-col flex-1">
+							<div class="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-primary mb-4">
+								<span class="px-2 py-1 bg-primary/5 rounded">{post.data.category}</span>
+								<span class="flex items-center gap-1 text-text-muted">
+									<Calendar class="w-3 h-3" />
+									{formatDate(post.data.pubDate)}
+								</span>
+							</div>
+							<h2 class="text-2xl font-bold text-text-main mb-4 leading-tight hover:text-primary transition-colors">
+								<a href={`/blog/${post.id}`}>{post.data.title}</a>
+							</h2>
+							<p class="text-text-muted text-sm line-clamp-3 mb-8">
+								{post.data.description}
+							</p>
+							<div class="mt-auto pt-6 border-t border-stone-100 flex items-center justify-between">
+								<div class="flex items-center gap-2">
+									<div class="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-primary">
+										<User class="w-4 h-4" />
+									</div>
+									<span class="text-xs font-bold text-text-main uppercase tracking-tighter">{post.data.author}</span>
+								</div>
+								<a href={`/blog/${post.id}`} class="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 group">
+									Ler Artigo
+									<ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+								</a>
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</main>
+	<Footer />
+	<WhatsAppButton />
+</Layout>

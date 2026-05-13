@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { Target, Award, Users, MapPin } from 'lucide-astro';
+
+const title = "Sobre a Sinteco BH | Tradição e Qualidade em Belo Horizonte";
+const description = "Conheça a história da Sinteco BH, nossa missão, valores e por que somos referência em restauração de pisos de madeira em toda Belo Horizonte.";
+---
+
+<Layout title={title} description={description}>
+	<Navbar />
+	<main class="pt-32">
+		<!-- Hero Section -->
+		<section class="section-padding">
+			<div class="grid lg:grid-cols-2 gap-16 items-center">
+				<div class="space-y-8">
+					<h1 class="text-5xl lg:text-7xl font-bold text-text-main leading-tight">
+						Tradição e excelência em cada <span class="text-primary italic">m²</span>
+					</h1>
+					<p class="text-xl text-text-muted leading-relaxed">
+						Nascida em Belo Horizonte, a Sinteco BH surgiu com o propósito de elevar o padrão de restauração de pisos de madeira na capital mineira. Combinamos técnicas tradicionais com o que há de mais moderno em equipamentos e resinas.
+					</p>
+					<div class="flex gap-4">
+						<div class="p-4 bg-stone-50 rounded-2xl border border-stone-100 flex-1">
+							<p class="text-3xl font-bold text-primary mb-1">10+</p>
+							<p class="text-xs font-bold text-text-muted uppercase tracking-widest">Anos de História</p>
+						</div>
+						<div class="p-4 bg-stone-50 rounded-2xl border border-stone-100 flex-1">
+							<p class="text-3xl font-bold text-primary mb-1">500+</p>
+							<p class="text-xs font-bold text-text-muted uppercase tracking-widest">Obras Entregues</p>
+						</div>
+					</div>
+				</div>
+				<div class="relative">
+					<div class="aspect-square rounded-3xl overflow-hidden shadow-2xl">
+						<img 
+							src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1000" 
+							alt="Nossa equipe trabalhando em BH" 
+							class="w-full h-full object-cover"
+						/>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Values -->
+		<section class="section-padding bg-stone-50">
+			<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+				{[
+					{ icon: Target, title: "Nossa Missão", text: "Transformar ambientes através da restauração técnica e estética de pisos de madeira." },
+					{ icon: Award, title: "Qualidade", text: "Utilizamos apenas materiais de primeira linha como Bona e as melhores resinas do mercado." },
+					{ icon: Users, title: "Equipe", text: "Profissionais treinados e experientes, garantindo pontualidade e limpeza na obra." },
+					{ icon: MapPin, title: "Atendimento", text: "Estamos presentes em todos os bairros de Belo Horizonte e região metropolitana." }
+				].map(item => (
+					<div class="bg-white p-8 rounded-3xl shadow-sm border border-stone-100 space-y-4">
+						<div class="w-12 h-12 bg-primary/5 rounded-xl flex items-center justify-center text-primary">
+							<item.icon class="w-6 h-6" />
+						</div>
+						<h3 class="text-xl font-bold text-text-main">{item.title}</h3>
+						<p class="text-text-muted text-sm leading-relaxed">{item.text}</p>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- Service Area -->
+		<section class="section-padding">
+			<div class="max-w-4xl mx-auto text-center space-y-12">
+				<h2 class="text-4xl font-bold text-text-main">Atendemos toda Belo Horizonte</h2>
+				<p class="text-lg text-text-muted">
+					Seja no Belvedere, Pampulha, Savassi ou Buritis, nossa equipe está pronta para atender você com agilidade e o melhor custo-benefício de BH.
+				</p>
+				<div class="flex flex-wrap justify-center gap-2">
+					{["Savassi", "Lourdes", "Sion", "Buritis", "Belvedere", "Pampulha", "Castelo", "Sagrada Família", "Floresta", "Santa Efigênia"].map(bairro => (
+						<span class="px-4 py-2 bg-stone-100 rounded-full text-xs font-bold text-text-muted uppercase tracking-widest">{bairro}</span>
+					))}
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+	<WhatsAppButton />
+</Layout>

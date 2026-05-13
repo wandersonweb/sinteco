@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Testimonials from '../components/Testimonials.astro';
+import LatestPosts from '../components/LatestPosts.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+
+const title = "Sinteco em BH | Raspagem de Taco e Pisos de Madeira";
+const description = "Especialista em Sinteco em BH. Oferecemos raspagem de tacos, aplicação de Bona, calafetação e restauração de pisos de madeira com acabamento premium em Belo Horizonte.";
+---
+
+<Layout title={title} description={description}>
+	<Navbar />
+	<main>
+		<Hero />
+		<Services />
+		<Testimonials />
+		
+		<!-- CTA Section -->
+		<section class="section-padding">
+			<div class="bg-primary rounded-[2.5rem] p-8 md:p-16 text-center text-white relative overflow-hidden">
+				<div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent)]"></div>
+				<div class="relative z-10 max-w-2xl mx-auto space-y-8">
+					<h2 class="text-3xl md:text-5xl font-bold">Pronto para renovar seu ambiente?</h2>
+					<p class="text-lg md:text-xl text-white/80">
+						Entre em contato hoje mesmo e solicite um orçamento gratuito para o seu piso de madeira em qualquer bairro de Belo Horizonte.
+					</p>
+					<div class="flex flex-col sm:flex-row justify-center gap-4">
+						<a href="https://wa.me/5531999999999" class="bg-white text-primary hover:bg-stone-100 px-8 py-4 rounded-xl font-bold text-lg transition-colors">
+							Falar no WhatsApp
+						</a>
+						<a href="/contato" class="bg-primary-dark border border-white/20 hover:bg-white/10 px-8 py-4 rounded-xl font-bold text-lg transition-colors">
+							Ver Mais Contatos
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<LatestPosts />
+	</main>
+	<Footer />
+	<WhatsAppButton />
+</Layout>

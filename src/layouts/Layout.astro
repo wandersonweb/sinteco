@@ -1,0 +1,114 @@
+---
+import '../styles/global.css';
+import { SEO } from 'astro-seo';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: string;
+}
+
+const { 
+  title, 
+  description, 
+  image = '/og-image.jpg', 
+  canonicalURL = Astro.url.href,
+  type = 'website'
+} = Astro.props;
+
+const siteName = "Sinteco BH - Especialista em Pisos de Madeira";
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+  
+  <SEO
+    title={title}
+    titleTemplate={`%s | ${siteName}`}
+    description={description}
+    canonical={canonicalURL}
+    openGraph={{
+      basic: {
+        title: title,
+        type: type,
+        image: image,
+        url: canonicalURL,
+      },
+      optional: {
+        siteName: siteName,
+        description: description,
+        locale: 'pt_BR',
+      }
+    }}
+    twitter={{
+      card: 'summary_large_image',
+      site: '@sintecobh',
+      title: title,
+      description: description,
+      image: image,
+    }}
+    extend={{
+      meta: [
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: '#78350f' },
+      ],
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'true' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap' },
+      ]
+    }}
+  />
+
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Sinteco BH",
+      "image": "https://sintecombh.com.br/logo.png",
+      "@id": "https://sintecombh.com.br",
+      "url": "https://sintecombh.com.br",
+      "telephone": "+5531999999999",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua Exemplo, 123",
+        "addressLocality": "Belo Horizonte",
+        "addressRegion": "MG",
+        "postalCode": "30000-000",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -19.9167,
+        "longitude": -43.9345
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/sintecobh",
+        "https://www.instagram.com/sintecobh"
+      ]
+    }
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>

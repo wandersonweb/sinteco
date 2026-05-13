@@ -1,0 +1,75 @@
+---
+import { CheckCircle2, ArrowRight } from 'lucide-astro';
+
+const trustPoints = [
+  "Atendimento em toda BH",
+  "+10 anos de experiência",
+  "Equipe qualificada",
+  "Orçamento gratuito"
+];
+---
+
+<section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,rgba(120,53,15,0.05)_0%,rgba(255,255,255,0)_100%)]"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-8 animate-in fade-in slide-in-from-left-8 duration-700">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+        </span>
+        Líder em Sinteco em Belo Horizonte
+      </div>
+
+      <h1 class="text-5xl lg:text-7xl font-bold text-text-main leading-[1.1]">
+        Seu piso de madeira <span class="text-primary italic">novo de novo</span> em BH
+      </h1>
+      
+      <p class="text-xl text-text-muted leading-relaxed max-w-xl">
+        Especialistas em raspagem de tacos, aplicação de sinteco, bona e restauração completa de pisos de madeira. Qualidade premium para sua casa ou empresa.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="https://wa.me/5531999999999" class="btn-primary gap-2 text-lg px-8 py-4">
+          Solicitar Orçamento Grátis
+          <ArrowRight class="w-5 h-5" />
+        </a>
+        <a href="#servicos" class="btn-secondary text-lg px-8 py-4">
+          Ver Nossos Serviços
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 pt-4">
+        {trustPoints.map(point => (
+          <div class="flex items-center gap-2 text-sm font-medium text-text-muted">
+            <CheckCircle2 class="w-5 h-5 text-primary" />
+            {point}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="relative animate-in fade-in slide-in-from-right-8 duration-700">
+      <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-8 border-white">
+        <img 
+          src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1000" 
+          alt="Piso de madeira restaurado com sinteco em Belo Horizonte" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+      
+      <!-- Floating Badge -->
+      <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-stone-100 flex items-center gap-4">
+        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-700">
+          <span class="text-2xl font-bold">10+</span>
+        </div>
+        <div>
+          <p class="text-xs font-bold text-text-muted uppercase tracking-wider leading-none">Anos de</p>
+          <p class="text-lg font-bold text-text-main leading-tight">Experiência</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

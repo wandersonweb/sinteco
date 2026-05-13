@@ -1,0 +1,53 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { ArrowRightCircle } from 'lucide-astro';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 6);
+---
+
+<section class="section-padding bg-stone-50">
+  <div class="text-center mb-16 space-y-4">
+    <h2 class="text-3xl md:text-4xl font-bold text-text-main uppercase tracking-tight max-w-3xl mx-auto leading-tight">
+      SERVIÇOS DE RASPAGEM E TRATAMENTO DE PISOS DE MADEIRA
+    </h2>
+    <div class="w-20 h-1 bg-primary mx-auto"></div>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8">
+    {posts.map((post: CollectionEntry<'blog'>) => (
+      <article class="flex flex-col group">
+        <a href={`/blog/${post.id}`} class="block relative aspect-[4/3] overflow-hidden rounded-sm">
+          <img 
+            src={post.data.heroImage || 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200'} 
+            alt={post.data.title}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <!-- The white overlapping box -->
+          <div class="absolute bottom-0 left-0 w-4/5 bg-white p-6 pt-8 translate-y-1/4 shadow-sm border-l-4 border-primary group-hover:shadow-md transition-shadow">
+            <h3 class="text-lg font-bold text-primary mb-2 leading-snug group-hover:text-secondary transition-colors line-clamp-2">
+              {post.data.title}
+            </h3>
+            <p class="text-text-muted text-xs leading-relaxed line-clamp-2 mb-4">
+              {post.data.description}
+            </p>
+            <div class="flex items-center gap-2 text-[10px] font-bold text-text-muted uppercase tracking-widest">
+              LER MAIS 
+              <ArrowRightCircle class="w-4 h-4 text-primary" />
+            </div>
+          </div>
+        </a>
+        <!-- Spacer for the overlapping box -->
+        <div class="h-12"></div>
+      </article>
+    ))}
+  </div>
+  
+  <div class="mt-20 text-center">
+    <a href="/blog" class="btn-primary px-10">
+      Ver Todos os Posts
+    </a>
+  </div>
+</section>

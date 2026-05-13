@@ -1,0 +1,84 @@
+---
+import { Star, Quote } from 'lucide-astro';
+
+const stats = [
+  { label: "Serviços Realizados", value: "500+" },
+  { label: "Anos no Mercado", value: "10+" },
+  { label: "Clientes Satisfeitos", value: "100%" },
+  { label: "Bairros Atendidos em BH", value: "80+" }
+];
+
+const testimonials = [
+  {
+    name: "Ricardo Santos",
+    role: "Apartamento no Savassi",
+    content: "O resultado superou minhas expectativas. O sinteco ficou impecável e o serviço foi muito limpo. Recomendo fortemente a equipe!",
+    stars: 5
+  },
+  {
+    name: "Mariana Oliveira",
+    role: "Casa no Bandeirantes",
+    content: "Fizemos a restauração de um taco antigo e parecia impossível, mas eles deixaram como novo. Profissionais pontuais e educados.",
+    stars: 5
+  },
+  {
+    name: "Construtora Horizonte",
+    role: "Parceiro Comercial",
+    content: "Trabalhamos com a Sinteco BH em diversos projetos de alto padrão. O acabamento é sempre o diferencial que buscamos.",
+    stars: 5
+  }
+];
+---
+
+<section class="section-padding overflow-hidden">
+  <div class="grid lg:grid-cols-3 gap-16 items-center">
+    <!-- Stats -->
+    <div class="lg:col-span-1 space-y-8">
+      <div class="space-y-4">
+        <h2 class="text-primary font-bold uppercase tracking-[0.2em] text-sm">Social Proof</h2>
+        <p class="text-4xl font-bold text-text-main leading-tight">Confiança construída metro a metro</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6">
+        {stats.map(stat => (
+          <div class="space-y-1">
+            <p class="text-3xl font-bold text-primary">{stat.value}</p>
+            <p class="text-xs font-bold text-text-muted uppercase tracking-wider">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+      
+      <div class="p-6 bg-stone-900 rounded-2xl text-white space-y-4">
+        <p class="text-sm font-medium opacity-80 italic">"Referência em acabamento de luxo e restauração técnica em Belo Horizonte."</p>
+        <div class="flex items-center gap-2">
+          <div class="flex">
+            {[1,2,3,4,5].map(() => <Star class="w-4 h-4 fill-amber-400 text-amber-400" />)}
+          </div>
+          <span class="text-xs font-bold uppercase tracking-widest">Google Reviews</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="lg:col-span-2 grid md:grid-cols-2 gap-6 relative">
+      <div class="absolute -top-12 -right-12 text-stone-100 -z-10">
+        <Quote class="w-48 h-48" />
+      </div>
+
+      {testimonials.map((t, i) => (
+        <div class={i === 2 ? "md:col-span-2 card-premium p-8 bg-white" : "card-premium p-8 bg-white"}>
+          <div class="flex gap-1 mb-4">
+            {Array.from({ length: t.stars }).map(() => <Star class="w-4 h-4 fill-primary text-primary" />)}
+          </div>
+          <p class="text-text-main font-medium mb-6 leading-relaxed italic">
+            "{t.content}"
+          </p>
+          <div>
+            <p class="font-bold text-text-main">{t.name}</p>
+            <p class="text-xs text-text-muted uppercase font-bold tracking-widest">{t.role}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

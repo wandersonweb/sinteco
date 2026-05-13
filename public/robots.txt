@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sintecobh.com.br/sitemap-index.xml

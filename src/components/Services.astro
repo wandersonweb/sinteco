@@ -1,0 +1,70 @@
+---
+import { Hammer, Droplets, Sparkles, Layers, ShieldCheck, Home } from 'lucide-astro';
+
+const services = [
+  {
+    title: "Sinteco em BH",
+    description: "Aplicação profissional de sinteco (brilho, fosco ou acetinado) com durabilidade garantida.",
+    icon: Sparkles,
+    href: "/sinteco-em-bh"
+  },
+  {
+    title: "Raspagem de Taco",
+    description: "Equipamentos modernos para raspagem sem poeira, nivelando e renovando seu piso.",
+    icon: Hammer,
+    href: "/raspagem-de-piso-de-madeira"
+  },
+  {
+    title: "Aplicação de Bona",
+    description: "Resinas de alta performance à base de água. Secagem rápida e sem cheiro forte.",
+    icon: Droplets,
+    href: "/aplicacao-de-bona"
+  },
+  {
+    title: "Calafetação",
+    description: "Vedação completa de frestas e juntas para um acabamento liso e uniforme.",
+    icon: Layers,
+    href: "/blog/restauracao-de-piso-de-madeira"
+  },
+  {
+    title: "Restauração de Decks",
+    description: "Tratamento especial para áreas externas, protegendo a madeira contra sol e chuva.",
+    icon: Home,
+    href: "/reforma-deck-madeira"
+  },
+  {
+    title: "Manutenção Preventiva",
+    description: "Limpeza técnica e revitalização para manter o brilho do seu piso por muito mais tempo.",
+    icon: ShieldCheck,
+    href: "/blog/manutencao-sinteco"
+  }
+];
+---
+
+<section id="servicos" class="section-padding bg-stone-50">
+  <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+    <h2 class="text-primary font-bold uppercase tracking-[0.2em] text-sm">Nossas Especialidades</h2>
+    <p class="text-4xl lg:text-5xl font-bold text-text-main">Soluções completas para seu piso de madeira</p>
+    <p class="text-text-muted text-lg">
+      Oferecemos o que há de melhor em tecnologia e materiais para garantir que seu piso seja o destaque da sua decoração.
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {services.map(service => (
+      <a href={service.href} class="card-premium group p-8 bg-white border-transparent hover:border-primary/20">
+        <div class="w-14 h-14 bg-primary/5 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors mb-6">
+          <service.icon class="w-7 h-7" />
+        </div>
+        <h3 class="text-xl font-bold text-text-main mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
+        <p class="text-text-muted text-sm leading-relaxed mb-6">
+          {service.description}
+        </p>
+        <span class="text-primary font-bold text-xs uppercase tracking-widest flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+          Saiba Mais
+          <span class="text-lg">→</span>
+        </span>
+      </a>
+    ))}
+  </div>
+</section>
