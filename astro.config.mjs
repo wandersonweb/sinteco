@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
+import partytown from '@astrojs/partytown';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sintecomg.com.br',
@@ -19,14 +21,14 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [
-    sitemap(), 
-    mdx()
-  ],
+  integrations: [sitemap(), mdx(), partytown({
+    config: { forward: ['dataLayer.push'] },
+  })],
 
   // Performance e Otimização
   compressHTML: true,
   build: {
     format: 'file',
+    inlineStylesheets: 'always',
   }
 });

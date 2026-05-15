@@ -12,8 +12,8 @@ const GA_ID = 'G-MHD74VKHQJ';
 <!-- ═══════════════════════════════════════════
      Google Analytics (gtag.js)
      ═══════════════════════════════════════════ -->
-<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-<script define:vars={{ GA_ID }}>
+<script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+<script type="text/partytown" define:vars={{ GA_ID }}>
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
