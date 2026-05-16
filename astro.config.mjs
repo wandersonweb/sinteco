@@ -7,10 +7,12 @@ import mdx from '@astrojs/mdx';
 
 import partytown from '@astrojs/partytown';
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sintecomg.com.br',
-  
+
   redirects: {
     '/sinteco-preco': '/blog/sinteco-preco',
     '/melhor-cera-para-piso': '/blog/melhor-cera-para-piso',
@@ -27,8 +29,11 @@ export default defineConfig({
 
   // Performance e Otimização
   compressHTML: true,
+
   build: {
     format: 'file',
     inlineStylesheets: 'always',
-  }
+  },
+
+  adapter: cloudflare()
 });
