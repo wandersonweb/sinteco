@@ -15,11 +15,29 @@ const {
   title, 
   description, 
   image = '/og-image.jpg', 
-  canonicalURL = Astro.url.href,
+  canonicalURL: canonicalURLProp,
   type = 'website'
 } = Astro.props;
 
 const siteName = "Sinteco BH - Especialista em Pisos de Madeira";
+
+const normalizeCanonicalURL = (url: string | URL) => {
+  const normalized = new URL(url, Astro.site ?? Astro.url.origin);
+  normalized.pathname = normalized.pathname
+    .replace(/\/index\.html$/, '/')
+    .replace(/\.html$/, '');
+
+  if (normalized.pathname !== '/') {
+    normalized.pathname = normalized.pathname.replace(/\/$/, '');
+  }
+
+  normalized.search = '';
+  normalized.hash = '';
+
+  return normalized.href;
+};
+
+const canonicalURL = normalizeCanonicalURL(canonicalURLProp ?? Astro.url);
 ---
 
 <!DOCTYPE html>
