@@ -83,6 +83,49 @@ export async function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+const serviceUrl = new URL(`/${service.slug}`, Astro.site).href;
+const serviceImageUrl = service.image ? new URL(service.image, Astro.site).href : undefined;
+const serviceSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: service.headline,
+	description: service.description,
+	author: {
+		'@type': 'Person',
+		name: service.author
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'Sinteco BH',
+		url: Astro.site?.href
+	},
+	mainEntityOfPage: serviceUrl,
+	image: serviceImageUrl ? [serviceImageUrl] : undefined
+};
+const serviceBreadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{
+			'@type': 'ListItem',
+			position: 1,
+			name: 'Home',
+			item: Astro.site?.href
+		},
+		{
+			'@type': 'ListItem',
+			position: 2,
+			name: 'Blog',
+			item: new URL('/blog', Astro.site).href
+		},
+		{
+			'@type': 'ListItem',
+			position: 3,
+			name: service.title,
+			item: serviceUrl
+		}
+	]
+};
 
 // Buscar os posts do blog para a seção de similares
 const allPosts = await getCollection('blog');
@@ -100,6 +143,8 @@ const formatDate = (date: Date) => {
 ---
 
 <Layout title={`${service.headline} | Sinteco BH`} description={service.description}>
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(serviceBreadcrumbSchema)} />
 	<Navbar />
 	
 	<main class="bg-white">
