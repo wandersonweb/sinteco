@@ -1,0 +1,10 @@
+# Legacy WordPress URLs
+/category/blogging /blog 301
+/category/blogging/ /blog 301
+/sinteco-preco-m2-em-bh /blog/sinteco-preco 301
+/sinteco-preco-m2-em-bh/ /blog/sinteco-preco 301
+
+# Old WordPress media and internal paths
+/wp-content/* / 301
+/wp-includes/* / 301
+/wp-admin/* /contato 301
