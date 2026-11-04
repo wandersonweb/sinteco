@@ -4,7 +4,13 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import WhatsAppButton from '../../components/WhatsAppButton.astro';
-import { Calendar, User, Clock, ChevronRight, Share2, ArrowRight, Award } from 'lucide-astro';
+import Calendar from 'lucide-astro/Calendar';
+import User from 'lucide-astro/User';
+import Clock from 'lucide-astro/Clock';
+import ChevronRight from 'lucide-astro/ChevronRight';
+import Share2 from 'lucide-astro/Share2';
+import ArrowRight from 'lucide-astro/ArrowRight';
+import Award from 'lucide-astro/Award';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');

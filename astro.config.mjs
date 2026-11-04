@@ -20,7 +20,8 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
+    build: { rollupOptions: { maxParallelFileOps: 32 } },
   },
 
   integrations: [sitemap(), mdx(), partytown({
